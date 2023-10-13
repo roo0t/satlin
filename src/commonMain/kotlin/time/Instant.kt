@@ -1,0 +1,4 @@
+package time
+
+class Instant {
+}

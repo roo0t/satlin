@@ -4,7 +4,7 @@ import coordinate.ellipsoid.Wgs84Ellipsoid
 import kotlin.math.*
 
 // https://en.wikipedia.org/wiki/Geographic_coordinate_conversion#From_geodetic_to_ECEF_coordinates
-fun GeodeticCoordinate.toEcefCoordinate(): EcefCoordinate {
+fun GeodeticPosition.toEcefPosition(): EcefPosition {
     val ellipsoid = Wgs84Ellipsoid
 
     val a = ellipsoid.semiMajorAxis
@@ -16,11 +16,11 @@ fun GeodeticCoordinate.toEcefCoordinate(): EcefCoordinate {
     val y = (N_phi + ellipsoidalHeight) * cos(latitude) * sin(longitude)
     val z = ((1 - f).pow(2) * N_phi + ellipsoidalHeight) * sin(latitude)
 
-    return EcefCoordinate(x, y, z)
+    return EcefPosition(x, y, z)
 }
 
 // https://en.wikipedia.org/wiki/Geographic_coordinate_conversion#From_ECEF_to_geodetic_coordinates
-fun EcefCoordinate.toGeodeticCoordinate(): GeodeticCoordinate {
+fun EcefPosition.toGeodeticPosition(): GeodeticPosition {
     val ellipsoid = Wgs84Ellipsoid
 
     val z_square = z.pow(2)
@@ -52,5 +52,5 @@ fun EcefCoordinate.toGeodeticCoordinate(): GeodeticCoordinate {
     val latitude = atan((z + e_prime_square * z_0) / p)
     val longitude = atan2(y, x)
 
-    return GeodeticCoordinate(latitude, longitude, ellipsoidalHeight)
+    return GeodeticPosition(latitude, longitude, ellipsoidalHeight)
 }

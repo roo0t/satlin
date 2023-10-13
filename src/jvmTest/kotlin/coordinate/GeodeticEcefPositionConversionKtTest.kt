@@ -3,25 +3,25 @@ package coordinate
 import kotlin.math.abs
 import kotlin.test.Test
 
-class GeodeticEcefCoordinateConversionKtTest {
-    private fun provideTestCases(): List<Pair<GeodeticCoordinate, EcefCoordinate>> {
+class GeodeticEcefPositionConversionKtTest {
+    private fun provideTestCases(): List<Pair<GeodeticPosition, EcefPosition>> {
         return listOf(
             // KAIST
-            GeodeticCoordinate(36.373650.toRadian(), 127.362608.toRadian(), 55.08)
-                    to EcefCoordinate(-3120195.27, 4086570.52, 3761687.39),
+            GeodeticPosition(36.373650.toRadian(), 127.362608.toRadian(), 55.08)
+                    to EcefPosition(-3120195.27, 4086570.52, 3761687.39),
             // MIT
-            GeodeticCoordinate(42.360300.toRadian(), 71.094163.toRadian(), -0.01)
-                    to EcefCoordinate(1529386.08, 4465486.67, 4275260.81),
+            GeodeticPosition(42.360300.toRadian(), 71.094163.toRadian(), -0.01)
+                    to EcefPosition(1529386.08, 4465486.67, 4275260.81),
             // Antarctica
-            GeodeticCoordinate(89.938246.toRadian(), 4.446291.toRadian(), 2937.12)
-                    to EcefCoordinate(6879.95, 534.97, 6359685.72),
+            GeodeticPosition(89.938246.toRadian(), 4.446291.toRadian(), 2937.12)
+                    to EcefPosition(6879.95, 534.97, 6359685.72),
         )
     }
 
     @Test
     fun testGeodeticToEcefCoordinate() {
         provideTestCases().forEach {
-            val actual = it.first.toEcefCoordinate()
+            val actual = it.first.toEcefPosition()
             val expected = it.second
             val diff = (actual - expected).norm
             val threshold = 1e-2
@@ -32,7 +32,7 @@ class GeodeticEcefCoordinateConversionKtTest {
     @Test
     fun testEcefToGeodeticCoordinate() {
         provideTestCases().forEach {
-            val actual = it.second.toGeodeticCoordinate()
+            val actual = it.second.toGeodeticPosition()
             val expected = it.first
 
             val angleThreshold = 0.0001.toRadian()
@@ -59,7 +59,7 @@ class GeodeticEcefCoordinateConversionKtTest {
     @Test
     fun testEcefToGeodeticToEcefCoordinate() {
         provideTestCases().forEach {
-            val actual = it.second.toGeodeticCoordinate().toEcefCoordinate()
+            val actual = it.second.toGeodeticPosition().toEcefPosition()
             val expected = it.second
             val threshold = 1e-8
             val diff = (expected - actual).norm
