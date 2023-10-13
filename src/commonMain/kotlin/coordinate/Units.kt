@@ -3,6 +3,7 @@ package coordinate
 typealias Radian = Double
 typealias Degree = Double
 typealias Meter = Double
+typealias MeterPerSec = Double
 
 fun Radian.toDegree(): Degree {
     return this / kotlin.math.PI * 180;
