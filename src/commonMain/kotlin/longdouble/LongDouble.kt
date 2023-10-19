@@ -1,8 +1,9 @@
 package longdouble
 
 import kotlin.math.floor
+import kotlin.math.pow
 
-class LongDouble private constructor(private val integerPart: Long, private val fractionPart: Double) {
+class LongDouble(private val integerPart: Long, private val fractionPart: Double) {
     companion object {
         val ZERO = valueOf(0)
 
@@ -43,6 +44,8 @@ class LongDouble private constructor(private val integerPart: Long, private val 
     operator fun div(rhs: Double) = normalize(0, integerPart / rhs) + normalize(0, fractionPart / rhs)
     operator fun div(rhs: Long) = this / rhs.toDouble()
     operator fun div(rhs: Int) = this / rhs.toDouble()
+
+    fun pow(exponent: Int) = valueOf(toDouble().pow(exponent))
 
     operator fun compareTo(rhs: LongDouble): Int {
         if (integerPart == rhs.integerPart) {
