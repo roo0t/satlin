@@ -16,7 +16,9 @@ data class Ut1Duration(val seconds: LongDouble) {
     }
 
     val days
-        get() = seconds / 86400
+        get() = seconds / 86400.0
+    val julianCentury
+        get() = days / 36525.0
 
     operator fun plus(rhs: Ut1Duration) = Ut1Duration(seconds + rhs.seconds)
     operator fun minus(rhs: Ut1Duration) = Ut1Duration(seconds - rhs.seconds)

@@ -43,4 +43,8 @@ data class Ut1Instant(val julianDate: LongDouble) {
     operator fun plus(duration: Ut1Duration) = Ut1Instant(julianDate + duration.days)
     operator fun minus(rhs: Ut1Instant) = Ut1Duration.ofDays(julianDate - rhs.julianDate)
     operator fun compareTo(rhs: Ut1Instant): Int = julianDate.compareTo(rhs.julianDate)
+
+    fun toTerrestrialTime(differenceInSecond: LongDouble): LongDouble {
+        return julianDate + differenceInSecond / 86400.0
+    }
 }

@@ -4,6 +4,10 @@ import kotlin.math.pow
 import kotlin.math.sqrt
 
 class Matrix private constructor(val rowCount: Int, val columnCount: Int, private val values: MutableList<Double>) {
+    companion object {
+        fun identity(n: Int) = Matrix(n, n) { row, column -> if (row == column) 1.0 else 0.0 }
+    }
+
     init {
         require(rowCount > 0) {
             "rowCount must be positive"

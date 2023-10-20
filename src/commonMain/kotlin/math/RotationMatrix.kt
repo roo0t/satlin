@@ -28,3 +28,6 @@ fun makeRotationMatrix(angle: Radian, rotationAxis: RotationAxis) =
             listOf(0.0, 0.0, 1.0),
         ))
     }
+
+fun rotateMatrix(matrix: Matrix, angle: Radian, rotationAxis: RotationAxis) =
+    makeRotationMatrix(-angle, rotationAxis) * matrix
