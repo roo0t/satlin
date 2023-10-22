@@ -21,3 +21,6 @@ fun convertUt1ToTt(instant: Ut1Instant, ut1UtcDifferenceSecond: Double): LongDou
     val tai = convertUtcToTai(utc, LeapSeconds.at(instant))
     return convertTaiToTt(tai)
 }
+
+fun convertUtcToUt1(utcJd: LongDouble, ut1UtcDifferenceSecond: Double) =
+    Ut1Instant(utcJd + ut1UtcDifferenceSecond / 86400.0)

@@ -3,7 +3,7 @@ package time
 import longdouble.LongDouble
 import longdouble.toLongDouble
 
-data class Ut1Duration(val seconds: LongDouble) {
+data class Ut1Duration(val seconds: LongDouble) : Comparable<Ut1Duration> {
     companion object {
         fun ofSeconds(seconds: LongDouble) = Ut1Duration(seconds)
         fun ofSeconds(seconds: Double) = Ut1Duration(seconds.toLongDouble())
@@ -26,4 +26,6 @@ data class Ut1Duration(val seconds: LongDouble) {
     operator fun times(rhs: Double) = Ut1Duration(seconds * rhs)
     operator fun div(rhs: LongDouble) = Ut1Duration(seconds / rhs)
     operator fun div(rhs: Double) = Ut1Duration(seconds / rhs)
+
+    override operator fun compareTo(rhs: Ut1Duration) = seconds.compareTo(rhs.seconds)
 }

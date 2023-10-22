@@ -1,9 +1,10 @@
 package math
 
+import kotlin.math.abs
 import kotlin.math.pow
 import kotlin.math.sqrt
 
-class Matrix private constructor(val rowCount: Int, val columnCount: Int, private val values: MutableList<Double>) {
+class Matrix constructor(val rowCount: Int, val columnCount: Int, private val values: MutableList<Double>) {
     companion object {
         fun identity(n: Int) = Matrix(n, n) { row, column -> if (row == column) 1.0 else 0.0 }
     }
@@ -111,4 +112,63 @@ class Matrix private constructor(val rowCount: Int, val columnCount: Int, privat
     }
 
     fun frobeniusNorm() = sqrt(values.sumOf { it.pow(2) })
+
+    fun inverseTimes(vector: Matrix): Matrix {
+        return doGaussianElimination(vector)
+    }
+
+    private fun doGaussianElimination(vector: Matrix): Matrix {
+        require(vector.rowCount == rowCount) {
+            "vector and matrix must have the same number of rows"
+        }
+        require(vector.columnCount == 1) {
+            "vector must be a single-column matrix"
+        }
+
+        val clone = Matrix(rowCount, columnCount, values.toMutableList())
+        val result = Matrix(vector.rowCount, vector.columnCount, vector.values.toMutableList())
+        for (i in 0..<rowCount) {
+            val rowIndexWithNonzeroLeadingColumn = (i..<rowCount).firstOrNull { abs(clone[it, i]) > 1e-6 }
+            if (rowIndexWithNonzeroLeadingColumn == null) {
+                continue
+            } else {
+                clone.exchangeRows(i, rowIndexWithNonzeroLeadingColumn)
+                result.exchangeRows(i, rowIndexWithNonzeroLeadingColumn)
+            }
+
+            for (j in (i + 1)..<rowCount) {
+                val factor = clone[j, i] / clone[i, i]
+                for (k in i..<columnCount) {
+                    clone[j, k] -= clone[i, k] * factor
+                }
+                result[j, 0] -= result[i, 0] * factor
+            }
+            for (k in (i + 1)..<columnCount) {
+                clone[i, k] /= clone[i, i]
+            }
+            result[i, 0] /= clone[i, i]
+            clone[i, i] = 1.0
+        }
+
+        for (i in (0..<rowCount).reversed()) {
+            for (j in 0..<i) {
+                result[j, 0] -= result[i, 0] * clone[j, i]
+            }
+        }
+        return result
+    }
+
+    private fun exchangeRows(i: Int, j: Int) {
+        require(i in 0..<rowCount)
+        require(j in 0..<rowCount)
+        if (i == j) {
+            return
+        }
+
+        for (k in 0..<columnCount) {
+            val temp = this[i, k]
+            this[i, k] = this[j, k]
+            this[j, k] = temp
+        }
+    }
 }
