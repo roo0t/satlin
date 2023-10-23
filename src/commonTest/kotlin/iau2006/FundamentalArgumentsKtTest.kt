@@ -1,9 +1,10 @@
-package astronomy.iau2006
+package iau2006
 
-import longdouble.LongDouble
+import astronomy.iau2006.calculateMeanAnomalyOfMoon
+import astronomy.iau2006.calculateMeanAnomalyOfSun
 import longdouble.toLongDouble
-import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class FundamentalArgumentsKtTest {
     @Test

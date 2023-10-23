@@ -2,6 +2,7 @@ package coordinate
 
 import kotlin.math.abs
 import kotlin.test.Test
+import kotlin.test.assertTrue
 
 class GeodeticEcefPositionConversionKtTest {
     private fun provideTestCases(): List<Pair<GeodeticPosition, EcefPosition>> {
@@ -25,7 +26,7 @@ class GeodeticEcefPositionConversionKtTest {
             val expected = it.second
             val diff = (actual - expected).norm
             val threshold = 1e-2
-            assert(diff < threshold) { "Difference between $actual and $expected is $diff >= $threshold" }
+            assertTrue(diff < threshold, "Difference between $actual and $expected is $diff >= $threshold")
         }
     }
 
@@ -39,20 +40,17 @@ class GeodeticEcefPositionConversionKtTest {
             val heightThreshold = 0.01
 
             val latitudeDiff = abs(expected.latitude - actual.latitude)
-            assert(latitudeDiff < angleThreshold) {
+            assertTrue(latitudeDiff < angleThreshold,
                 "Latitude difference between ${actual.latitude.toDegree()}deg and ${expected.latitude.toDegree()}deg " +
-                        "is ${latitudeDiff.toDegree()}deg >= ${angleThreshold.toDegree()}}"
-            }
+                        "is ${latitudeDiff.toDegree()}deg >= ${angleThreshold.toDegree()}}")
             val longitudeDiff = abs(expected.longitude - actual.longitude)
-            assert(longitudeDiff < angleThreshold) {
+            assertTrue(longitudeDiff < angleThreshold,
                 "Longitude difference between ${actual.longitude.toDegree()}deg and ${expected.longitude.toDegree()}deg " +
-                        "is ${longitudeDiff.toDegree()}deg >= ${angleThreshold.toDegree()}}"
-            }
+                        "is ${longitudeDiff.toDegree()}deg >= ${angleThreshold.toDegree()}}")
             val heightDiff = abs(expected.ellipsoidalHeight - actual.ellipsoidalHeight)
-            assert(heightDiff < heightThreshold) {
+            assertTrue(heightDiff < heightThreshold,
                 "Height difference between ${actual.ellipsoidalHeight}m and ${expected.ellipsoidalHeight}m " +
-                        "is ${heightDiff}m >= $heightThreshold"
-            }
+                        "is ${heightDiff}m >= $heightThreshold")
         }
     }
 
@@ -64,9 +62,7 @@ class GeodeticEcefPositionConversionKtTest {
             val threshold = 1e-8
             val diff = (expected - actual).norm
 
-            assert(diff < threshold) {
-                "Difference between $actual and $expected is $diff >= $threshold"
-            }
+            assertTrue(diff < threshold, "Difference between $actual and $expected is $diff >= $threshold")
         }
     }
 }

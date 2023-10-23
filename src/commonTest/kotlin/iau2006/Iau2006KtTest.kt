@@ -1,10 +1,11 @@
-package astronomy.iau2006
+package iau2006
 
+import astronomy.iau2006.*
 import longdouble.LongDouble
 import longdouble.toLongDouble
 import math.Matrix
-import org.junit.jupiter.api.Test
 import time.Ut1Instant
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class Iau2006KtTest {
