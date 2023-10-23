@@ -14,7 +14,7 @@ fun EciPosition.toEcefPosition(): EcefPosition {
 
 fun EcefPosition.toEciPosition(referenceTime: Ut1Instant): EciPosition {
     val c2tConversionMatrix = calculateC2tConversionMatrix(referenceTime)
-    return EciPosition(c2tConversionMatrix.inverseTimes(toColumnMatrix()), referenceTime)
+    return EciPosition(c2tConversionMatrix.solve(toColumnMatrix()), referenceTime)
 }
 
 private fun calculateC2tConversionMatrix(referenceTime: Ut1Instant): Matrix {
