@@ -19,13 +19,14 @@ kotlin {
             useJUnitPlatform()
         }
     }
-    js(BOTH) {
+    js(IR) {
+        binaries.executable()
         browser {
-            commonWebpackConfig {
+            commonWebpackConfig(Action {
                 cssSupport {
                     enabled.set(true)
                 }
-            }
+            })
         }
     }
     val hostOs = System.getProperty("os.name")

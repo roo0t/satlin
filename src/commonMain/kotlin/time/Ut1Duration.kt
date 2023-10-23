@@ -27,5 +27,5 @@ data class Ut1Duration(val seconds: LongDouble) : Comparable<Ut1Duration> {
     operator fun div(rhs: LongDouble) = Ut1Duration(seconds / rhs)
     operator fun div(rhs: Double) = Ut1Duration(seconds / rhs)
 
-    override operator fun compareTo(rhs: Ut1Duration) = seconds.compareTo(rhs.seconds)
+    override operator fun compareTo(other: Ut1Duration) = seconds.compareTo(other.seconds)
 }
